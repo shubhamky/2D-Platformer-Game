@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
     public Animator animator;
+    bool crouch = false;
     void Start()
     {
         Debug.Log("Script Attached");
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
         float speed = Input.GetAxisRaw("Horizontal");
         animator.SetFloat("Speed", Mathf.Abs(speed));
 
+
         Vector3 scale = transform.localScale;
         if(speed < 0)
         {
@@ -26,5 +28,16 @@ public class PlayerController : MonoBehaviour
             scale.x = Mathf.Abs(scale.x);
         }
         transform.localScale = scale;
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            crouch = true;
+            animator.SetBool("Crouch", crouch);
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            crouch = false;
+            animator.SetBool("Crouch", crouch);
+        }
     }
 }
