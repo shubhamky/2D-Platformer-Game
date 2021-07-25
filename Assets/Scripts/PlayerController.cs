@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float jump;
     bool crouch = false;
+    public ScoreController scoreController;
 
     private Rigidbody2D rb2d;
     void Awake()
@@ -16,6 +18,12 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Script Attached");
         rb2d = gameObject.GetComponent<Rigidbody2D>();
         SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer>();
+    }
+
+    public void PickUpKey()
+    {
+        Debug.Log("Player has picked-up the key");
+        scoreController.IncreaseScore(10);
     }
 
     // Update is called once per frame
