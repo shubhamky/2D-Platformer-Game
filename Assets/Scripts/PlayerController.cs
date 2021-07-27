@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float jump;
     bool crouch = false;
     public ScoreController scoreController;
+    bool death = false;
 
     private Rigidbody2D rb2d;
     void Awake()
@@ -18,6 +20,22 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Script Attached");
         rb2d = gameObject.GetComponent<Rigidbody2D>();
         SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer>();
+    }
+
+    internal void KillPlayer()
+    {
+        Debug.Log("Player Killed by Enemy");
+        //Destroy(gameObject); We can't do this because main camera is child of Player
+        // Play death animation
+        death = true;
+        animator.SetBool("Death", death);
+
+        Invoke("ReloadScene", 2.0f);
+    }
+
+    private void ReloadScene()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void PickUpKey()
