@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float jump;
     bool crouch = false;
     public ScoreController scoreController;
+    public GameOverController gameOverController;
     bool death = false;
 
     private Rigidbody2D rb2d;
@@ -29,13 +30,9 @@ public class PlayerController : MonoBehaviour
         // Play death animation
         death = true;
         animator.SetBool("Death", death);
-
-        Invoke("ReloadScene", 2.0f);
-    }
-
-    private void ReloadScene()
-    {
-        SceneManager.LoadScene(0);
+        gameOverController.PlayerDied();
+        //Invoke("ReloadScene", 2.0f);
+        this.enabled = false;
     }
 
     public void PickUpKey()
